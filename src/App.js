@@ -3,9 +3,50 @@
 import React, { useState } from 'react';
 import './App.css';
 import logo from './logo.svg'; // You would need to create this SVG file
+import emailjs from '@emailjs/browser';
 
 function App() {
-  const [activeTab, setActiveTab] = useState('find'); // 'find' or 'list'
+  const [activeTab, setActiveTab] = useState('find');
+  const [patientForm, setPatientForm] = useState({
+    name: '',
+    email: '',
+    location: '',
+    description: ''
+  });
+
+  const [clinicForm, setClinicForm] = useState({
+    title: '',
+    address: '',
+    description: '',
+    price: ''
+  });
+
+  const sendEmail = (e, type) => {
+    e.preventDefault();
+
+    const templateParams = type === 'find' ? {
+      name: patientForm.name,
+      email: patientForm.email,
+      location: patientForm.location,
+      description: patientForm.description
+    } : {
+      title: clinicForm.title,
+      address: clinicForm.address,
+      description: clinicForm.description,
+      price: clinicForm.price
+    };
+
+    emailjs.send(
+      'service_kxa0ghi',
+      type === 'find' ? 'YOUR_PATIENT_TEMPLATE_ID' : 'YOUR_CLINIC_TEMPLATE_ID',
+      templateParams,
+      'YOUR_PUBLIC_KEY'
+    ).then((result) => {
+      alert('Email enviado com sucesso!');
+    }, (error) => {
+      alert('Erro ao enviar o email. Tente novamente.');
+    });
+  };
 
   return (
     <div className="dental-space">
@@ -43,27 +84,47 @@ function App() {
         {/* Search Section (Patient View) */}
         {activeTab === 'find' && (
           <div className="search-section">
-            <form className="search-form">
+            <form className="search-form" onSubmit={(e) => sendEmail(e, 'find')}>
               <h3>Ache consultórios disponíveis</h3>
 
               <div className="form-field">
                 <label>Seu Nome</label>
-                <input type="text" placeholder="Nome" />
+                <input
+                  type="text"
+                  placeholder="Nome"
+                  value={patientForm.name}
+                  onChange={(e) => setPatientForm({ ...patientForm, name: e.target.value })}
+                />
               </div>
 
               <div className="form-field">
                 <label>Seu Email</label>
-                <input type="email" placeholder="Email" />
+                <input
+                  type="email"
+                  placeholder="Email"
+                  value={patientForm.email}
+                  onChange={(e) => setPatientForm({ ...patientForm, email: e.target.value })}
+                />
               </div>
 
               <div className="form-field">
                 <label>Localização</label>
-                <input type="text" placeholder="Cidade ou CEP" />
+                <input
+                  type="text"
+                  placeholder="Cidade ou CEP"
+                  value={patientForm.location}
+                  onChange={(e) => setPatientForm({ ...patientForm, location: e.target.value })}
+                />
               </div>
 
               <div className="form-field">
                 <label>Descrição</label>
-                <input type="text" placeholder="O que você procura?" />
+                <input
+                  type="text"
+                  placeholder="O que você procura?"
+                  value={patientForm.description}
+                  onChange={(e) => setPatientForm({ ...patientForm, description: e.target.value })}
+                />
               </div>
 
               <button type="submit" className="primary-button">Procure Consultórios Disponíveis</button>
@@ -71,30 +132,49 @@ function App() {
           </div>
         )}
 
-        {/* List Your Clinic Section (Clinic Owner View) */}
         {activeTab === 'list' && (
           <div className="list-clinic-section">
-            <form className="listing-form">
+            <form className="listing-form" onSubmit={(e) => sendEmail(e, 'list')}>
               <h3>Informação do Consultório</h3>
 
               <div className="form-field">
                 <label>Título do Anúncio</label>
-                <input type="text" placeholder="Entre com o título" />
+                <input
+                  type="text"
+                  placeholder="Entre com o título"
+                  value={clinicForm.title}
+                  onChange={(e) => setClinicForm({ ...clinicForm, title: e.target.value })}
+                />
               </div>
 
               <div className="form-field">
-                <label>Address</label>
-                <input type="text" placeholder="Entre com o endereço" />
+                <label>Endereço</label>
+                <input
+                  type="text"
+                  placeholder="Entre com o endereço"
+                  value={clinicForm.address}
+                  onChange={(e) => setClinicForm({ ...clinicForm, address: e.target.value })}
+                />
               </div>
 
               <div className="form-field">
                 <label>Descrição</label>
-                <textarea placeholder="Entre com a descrição" rows="4"></textarea>
+                <textarea
+                  placeholder="Entre com a descrição"
+                  rows="4"
+                  value={clinicForm.description}
+                  onChange={(e) => setClinicForm({ ...clinicForm, description: e.target.value })}
+                ></textarea>
               </div>
 
               <div className="form-field">
                 <label>Preço (por mês)</label>
-                <input type="text" placeholder="Entre com o preço mensal" />
+                <input
+                  type="text"
+                  placeholder="Entre com o preço mensal"
+                  value={clinicForm.price}
+                  onChange={(e) => setClinicForm({ ...clinicForm, price: e.target.value })}
+                />
               </div>
 
               <button type="submit" className="primary-button">Anuncie Minha Clínica</button>
