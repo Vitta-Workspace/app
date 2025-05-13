@@ -1,9 +1,9 @@
-// App.js - Main component for the DentalSpace marketplace
-
 import React, { useState } from 'react';
 import './App.css';
 import logo from './logo.svg'; // You would need to create this SVG file
 import emailjs from '@emailjs/browser';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const [activeTab, setActiveTab] = useState('find');
@@ -17,6 +17,8 @@ function App() {
   const [clinicForm, setClinicForm] = useState({
     title: '',
     address: '',
+    name: '',
+    email: '',
     description: '',
     price: ''
   });
@@ -24,29 +26,46 @@ function App() {
   const sendEmail = (e, type) => {
     e.preventDefault();
 
-    const templateParams = type === 'find' ? {
-      name: patientForm.name,
-      email: patientForm.email,
-      location: patientForm.location,
-      description: patientForm.description
-    } : {
-      title: clinicForm.title,
-      address: clinicForm.address,
-      description: clinicForm.description,
-      price: clinicForm.price
-    };
+    const templateParams = type === 'find'
+      ? {
+        name: patientForm.name,
+        email: patientForm.email,
+        location: patientForm.location,
+        description: patientForm.description,
+      }
+      : {
+        title: clinicForm.title,
+        name: clinicForm.name,
+        email: clinicForm.email,
+        address: clinicForm.address,
+        description: clinicForm.description,
+        price: clinicForm.price,
+      };
+
+    const templateId = type === 'find' ? 'template_8zcc7sp' : 'template_vb2ntre';
 
     emailjs.send(
       'service_kxa0ghi',
-      type === 'find' ? 'YOUR_PATIENT_TEMPLATE_ID' : 'YOUR_CLINIC_TEMPLATE_ID',
+      templateId,
       templateParams,
-      'YOUR_PUBLIC_KEY'
-    ).then((result) => {
-      alert('Email enviado com sucesso!');
-    }, (error) => {
-      alert('Erro ao enviar o email. Tente novamente.');
+      '69-BimM9nme3CX0my'
+    ).then(() => {
+      toast.success('✅ Mensagem enviada! Em breve entraremos em contato.', {
+        position: "top-center",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true
+      });
+    }).catch(() => {
+      toast.error('❌ Erro no envio. Tente novamente.', {
+        position: "top-center",
+        autoClose: 5000
+      });
     });
   };
+
 
   return (
     <div className="dental-space">
@@ -144,6 +163,26 @@ function App() {
                   placeholder="Entre com o título"
                   value={clinicForm.title}
                   onChange={(e) => setClinicForm({ ...clinicForm, title: e.target.value })}
+                />
+              </div>
+
+              <div className="form-field">
+                <label>Seu Nome</label>
+                <input
+                  type="text"
+                  placeholder="Nome"
+                  value={clinicForm.name}
+                  onChange={(e) => setClinicForm({ ...clinicForm, name: e.target.value })}
+                />
+              </div>
+
+              <div className="form-field">
+                <label>Seu Email</label>
+                <input
+                  type="email"
+                  placeholder="Email"
+                  value={clinicForm.email}
+                  onChange={(e) => setClinicForm({ ...clinicForm, email: e.target.value })}
                 />
               </div>
 
@@ -249,6 +288,7 @@ function App() {
 
         <p className="copyright">© 2025 Vitta. Todos os direitos reservados.</p>
       </footer>
+      <ToastContainer />
     </div>
   );
 }
