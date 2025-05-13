@@ -13,7 +13,10 @@ body {
   line-height: 1.5;
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
   font-family: 'Poppins', sans-serif;
   color: #0F766E;
 }
@@ -130,7 +133,8 @@ button {
 }
 
 /* Search Section */
-.search-section, .list-clinic-section {
+.search-section,
+.list-clinic-section {
   width: 700px;
   padding: 32px;
   background-color: #F8FAFC;
@@ -138,13 +142,15 @@ button {
   border-radius: 8px;
 }
 
-.search-form, .listing-form {
+.search-form,
+.listing-form {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
-.search-form h3, .listing-form h3 {
+.search-form h3,
+.listing-form h3 {
   font-size: 18px;
   font-weight: 600;
   color: #0F172A;
@@ -162,7 +168,8 @@ button {
   color: #334155;
 }
 
-.form-field input, .form-field textarea {
+.form-field input,
+.form-field textarea {
   height: 48px;
   padding: 0 16px;
   border-radius: 6px;
@@ -176,6 +183,27 @@ button {
   height: auto;
   padding: 12px 16px;
 }
+
+.form-field select {
+  height: 48px;
+  padding: 0 16px;
+  border-radius: 6px;
+  border: 1px solid #CBD5E1;
+  font-size: 16px;
+  color: #475569;
+  background-color: #fff;
+  width: 100%;
+  appearance: none;
+  cursor: pointer;
+}
+
+/* Adicional para melhorar o foco */
+.form-field select:focus {
+  outline: none;
+  border-color: #0D9488;
+  box-shadow: 0 0 0 2px rgba(13, 148, 136, 0.2);
+}
+
 
 .photo-upload {
   display: flex;
@@ -341,17 +369,19 @@ button {
 
 /* Responsive adjustments */
 @media (max-width: 1024px) {
-  .steps-container, .footer-content {
+
+  .steps-container,
+  .footer-content {
     width: 100%;
     flex-direction: column;
     align-items: center;
   }
-  
+
   .steps-column {
     width: 100%;
     max-width: 600px;
   }
-  
+
   .footer-links {
     margin-top: 32px;
     width: 100%;
@@ -360,24 +390,27 @@ button {
 }
 
 @media (max-width: 768px) {
-  .user-type-tabs, .search-section, .list-clinic-section {
+
+  .user-type-tabs,
+  .search-section,
+  .list-clinic-section {
     width: 100%;
   }
-  
+
   .header {
     flex-direction: column;
     gap: 16px;
   }
-  
+
   .nav {
     width: 100%;
     justify-content: space-around;
   }
-  
+
   .hero h2 {
     font-size: 36px;
   }
-  
+
   .footer-links {
     flex-direction: column;
     gap: 24px;

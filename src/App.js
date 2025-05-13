@@ -137,14 +137,21 @@ function App() {
               </div>
 
               <div className="form-field">
-                <label>Descrição</label>
-                <input
-                  type="text"
-                  placeholder="O que você procura?"
+                <label>Especialidade</label>
+                <select
                   value={patientForm.description}
                   onChange={(e) => setPatientForm({ ...patientForm, description: e.target.value })}
-                />
+                >
+                  <option value="">Selecione uma especialidade</option>
+                  <option value="Odontologia">Odontologia</option>
+                  <option value="Médico">Médico</option>
+                  <option value="Psicologia">Psicologia</option>
+                  <option value="Fisioterapia">Fisioterapia</option>
+                  <option value="Fonoaudiologia">Fonoaudiologia</option>
+                  <option value="Nutrição">Nutrição</option>
+                </select>
               </div>
+
 
               <button type="submit" className="primary-button">Procure Consultórios Disponíveis</button>
             </form>
@@ -197,14 +204,21 @@ function App() {
               </div>
 
               <div className="form-field">
-                <label>Descrição</label>
-                <textarea
-                  placeholder="Entre com a descrição"
-                  rows="4"
+                <label>Especialidade</label>
+                <select
                   value={clinicForm.description}
                   onChange={(e) => setClinicForm({ ...clinicForm, description: e.target.value })}
-                ></textarea>
+                >
+                  <option value="">Selecione uma especialidade</option>
+                  <option value="Odontologia">Odontologia</option>
+                  <option value="Médico">Médico</option>
+                  <option value="Psicologia">Psicologia</option>
+                  <option value="Fisioterapia">Fisioterapia</option>
+                  <option value="Fonoaudiologia">Fonoaudiologia</option>
+                  <option value="Nutrição">Nutrição</option>
+                </select>
               </div>
+
 
               <div className="form-field">
                 <label>Preço (por mês)</label>
